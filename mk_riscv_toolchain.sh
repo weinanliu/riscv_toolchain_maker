@@ -5,7 +5,32 @@ THIS=$(pwd)
 host_root=$(pwd)/host_root
 target_root=$host_root/riscv64_target_root
 
+wget https://mirrors.tuna.tsinghua.edu.cn/kernel/v5.x/linux-5.18.17.tar.gz
+tar -xf linux-5.18.17.tar.gz &
+wget https://mirrors.tuna.tsinghua.edu.cn/gnu/binutils/binutils-2.39.tar.gz
+tar -xf binutils-2.39.tar.gz &
+wget https://mirrors.tuna.tsinghua.edu.cn/gnu/glibc/glibc-2.35.tar.gz
+tar -xf glibc-2.35.tar.gz &
+wget https://mirrors.tuna.tsinghua.edu.cn/gnu/gcc/gcc-11.3.0/gcc-11.3.0.tar.gz
+tar -xf gcc-11.3.0.tar.gz &
+wget https://mirrors.tuna.tsinghua.edu.cn/gnu/gdb/gdb-12.1.tar.gz
+tar -xf gdb-12.1.tar.gz &
+
+wait
+
 rm -rf ${host_root}
+
+mkdir gdb_build
+cd gdb_build
+rm -rf *
+../gdb-12.1/configure \
+	--prefix=${host_root}/usr \
+	--target=riscv64-linux-gnu \
+	--disable-sim
+make -j12
+make install -j12
+cd ..
+
 
 mkdir binutils_build
 cd binutils_build
