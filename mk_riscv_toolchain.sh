@@ -18,6 +18,10 @@ tar -xf gdb-12.1.tar.gz &
 
 wait
 
+sudo apt install gcc g++ make texinfo
+sudo apt install gawk bison flex
+sudo apt install libgmp-dev libmpfr-dev libmpc-dev libelf-dev
+
 rm -rf ${host_root}
 
 mkdir gdb_build
