@@ -19,8 +19,14 @@ tar -xf gdb-12.1.tar.gz &
 wait
 
 sudo apt install gcc g++ make texinfo
-sudo apt install gawk bison flex
-sudo apt install libgmp-dev libmpfr-dev libmpc-dev libelf-dev
+sudo apt install libgmp-dev libmpfr-dev libmpc-dev # for building gcc
+sudo apt install gawk bison flex # for building glibc
+sudo apt install libelf-dev libssl-dev # for building kernel
+sudo apt install libncurses-dev
+sudo apt install pkg-config
+sudo apt install libdebuginfod-dev libexpat1-dev # for building gdb
+sudo apt install libpython2-dev libpython3-dev libpython-all-dev python2 python3 python-is-python3 # for building gdb
+sudo apt install guile-3.0-dev # for building gdb
 
 rm -rf ${host_root}
 
@@ -30,7 +36,14 @@ rm -rf *
 ../gdb-12.1/configure \
 	--prefix=${host_root}/usr \
 	--target=riscv64-linux-gnu \
-	--disable-sim
+	--disable-sim \
+	--with-curses \
+	--with-debuginfod \
+	--with-expat \
+	--with-mpfr \
+	--with-python \
+	--with-guile
+
 make -j12
 make install -j12
 cd ..
